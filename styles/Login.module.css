@@ -1,0 +1,25 @@
+.loginContainer {
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.form {
+  margin: 1.5rem 0;
+}
+
+.error {
+  color: #dc3545;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.demo {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+  text-align: center;
+  color: #666;
+}
