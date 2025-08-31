@@ -4,13 +4,20 @@ import { useState, useEffect } from 'react'
 
 export const useAuth = () => {
   const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     // Verificar si hay un usuario en localStorage al cargar
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
-      setUser(JSON.parse(storedUser))
+      try {
+        setUser(JSON.parse(storedUser))
+      } catch (error) {
+        console.error('Error parsing user data:', error)
+        localStorage.removeItem('user')
+      }
     }
+    setIsLoading(false)
   }, [])
 
   const login = (email, password) => {
@@ -29,5 +36,5 @@ export const useAuth = () => {
     localStorage.removeItem('user')
   }
 
-  return { user, login, logout }
+  return { user, isLoading, login, logout }
 }

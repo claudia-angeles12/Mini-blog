@@ -5,14 +5,24 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function ProtectedRoute({ children }) {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       router.push('/login')
     }
-  }, [user, router])
+  }, [user, isLoading, router])
+
+  if (isLoading) {
+    return (
+      <div className="container">
+        <div className="card">
+          <p>Cargando...</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!user) {
     return (

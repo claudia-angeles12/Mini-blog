@@ -27,7 +27,9 @@ export default function ArticleDetail() {
     <div className="container">
       <article className={styles.article}>
         <h1>{article.title}</h1>
-        <p className={styles.meta}>Publicado el {new Date(article.createdAt).toLocaleDateString()}</p>
+        <p className={styles.meta}>
+          Publicado el {new Date(article.createdAt).toLocaleDateString()}
+        </p>
         <div className={styles.content}>
           {article.content.split('\n').map((paragraph, i) => (
             <p key={i}>{paragraph}</p>

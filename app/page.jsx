@@ -15,14 +15,22 @@ export default function Home() {
 
       <section className={styles.latestArticles}>
         <h2>Artículos Recientes</h2>
-        <div className={styles.articlesGrid}>
-          {articles.map(article => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
-        <div className={styles.seeAll}>
-          <Link href="/articulos" className="btn btn-primary">Ver todos los artículos</Link>
-        </div>
+        {articles.length === 0 ? (
+          <div className={styles.empty}>
+            <p>No hay artículos aún.</p>
+          </div>
+        ) : (
+          <>
+            <div className={styles.articlesGrid}>
+              {articles.map(article => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+            <div className={styles.seeAll}>
+              <Link href="/articulos" className="btn btn-primary">Ver todos los artículos</Link>
+            </div>
+          </>
+        )}
       </section>
     </div>
   )

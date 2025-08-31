@@ -1,1 +1,20 @@
-
+{
+  "name": "mini-blog",
+  "version": "1.0.0",
+  "description": "Mini blog con Next.js y React",
+  "main": "index.js",
+  "dependencies": {
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

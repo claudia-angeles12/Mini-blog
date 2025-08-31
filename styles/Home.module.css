@@ -34,3 +34,11 @@
 .seeAll {
   text-align: center;
 }
+
+.empty {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
