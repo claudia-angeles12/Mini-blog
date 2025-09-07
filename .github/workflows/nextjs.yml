@@ -1,0 +1,63 @@
+# Nombre del Workflow
+name: Deploy Next.js site to Pages
+
+# Disparadores (Triggers)
+on:
+  # Se ejecuta en cada push a la rama 'main'
+  push:
+    branches: ["main"]
+  # Permite ejecutar este workflow manualmente desde la pestaña de Actions
+  workflow_dispatch:
+
+# Permisos necesarios para el token de GITHUB_TOKEN
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permite un solo despliegue concurrente, cancelando ejecuciones anteriores
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Job de construcción (build)
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Usa la versión de Node que prefieras
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build with Next.js
+        # El nombre del repo es necesario para basePath y assetPrefix
+        run: npm run build
+        env:
+          # El nombre del repositorio se extrae automáticamente
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Sube el contenido de la carpeta 'out' generada por `next export`
+          path: ./out
+
+  # Job de despliegue (deploy)
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
